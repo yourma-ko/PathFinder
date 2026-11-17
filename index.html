@@ -1,149 +1,638 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#103242"><title>PathFinder · Calculus I</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PathFinder Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=STIX+Two+Text:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:light;--ink:#14313d;--sub:#425c62;--muted:#51666b;--teal:#006c62;--line:#cbd9d4;--bg:#f3f6f1;--paper:#fff;--navy:#103242}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Segoe UI",Arial,sans-serif}button,select,input,textarea{font:inherit;color:inherit}button,select{cursor:pointer}button:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid #c08200;outline-offset:3px}button{touch-action:manipulation}.frame{max-width:1120px;margin:auto;padding:0 32px}header{background:var(--navy);color:#fff}.top{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-size:25px;font-weight:720;letter-spacing:-1.1px;display:flex;gap:11px;align-items:center}.mark{display:inline-block;width:22px;height:23px;border-left:4px solid #82d8bb;border-bottom:4px solid #82d8bb;transform:skewY(-26deg);position:relative}.mark:after{content:"";position:absolute;width:13px;height:10px;bottom:0;right:0;border-left:3px solid #82d8bb;border-top:3px solid #82d8bb}.tools{display:flex;gap:18px;align-items:center}.role{font-size:14px;color:#c4e2d8}.tools select{background:var(--navy);color:white;border:1px solid #678489;border-radius:6px;padding:5px 8px;font-size:14px}main{padding:36px 0 29px}.kicker{font-size:13px;font-weight:700;letter-spacing:1.3px;color:var(--teal);text-transform:uppercase}h1,h2,h3,p{margin:0}h1{font-size:clamp(32px,4vw,52px);line-height:1.12;font-weight:650;letter-spacing:-1.8px;margin:7px 0 10px}h2{font-size:24px;line-height:1.2;letter-spacing:-.6px}h3{font-size:17px}.lead{color:var(--sub);max-width:840px}.layout{margin-top:26px;display:grid;grid-template-columns:minmax(0,1.65fr) minmax(270px,.9fr);gap:22px;align-items:start}.card{background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:28px;box-shadow:0 3px 12px #173b3110}.side{background:#e8f0e9;box-shadow:none}.side .eyebrow{margin-bottom:7px}.eyebrow,.meta{color:var(--muted);font-size:14px}.eyebrow{font-weight:650}.cap{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.meter{height:5px;background:#e1e9e5;border-radius:6px;margin:12px 0 21px;overflow:hidden}.meter span{display:block;background:#178773;height:100%}.prompt{font-size:21px;font-weight:600}.formula{font:clamp(34px,5vw,54px)/1.3 Cambria,Georgia,serif;letter-spacing:.3px;margin:14px 0 22px}.formula sub,.formula sup{font-size:55%;line-height:0}.answers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.answer,.quiet,.primary{border-radius:8px;padding:11px 17px;min-height:45px;font-weight:650}.answer{background:#fafcf9;border:1.5px solid #aec6bc;font-size:24px}.answer:hover,.quiet:hover{background:#e3f0e8;border-color:var(--teal)}.primary{background:var(--teal);color:white;border:1px solid var(--teal)}.primary:hover{background:#00574f}.quiet{border:1px solid var(--line);background:white}.feedback{min-height:30px;color:var(--sub);font-size:14px;margin-top:15px}.map-list,.week-list{list-style:none;padding:0;margin:16px 0 0}.map-list li,.week-list li{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding:13px 0}.map-list li:last-child,.week-list li:last-child{padding-bottom:0}.status{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:13px;font-weight:650}.status:before{content:"";width:8px;height:8px;flex:none;border-radius:50%;background:currentColor}.unknown{color:#58676a}.mastered{color:#0a6952}.gap{color:#955008}.partial{color:#2a6390}.side-note{font-size:13px;color:var(--sub);margin-top:17px}.week-main{padding:18px;border-left:3px solid var(--teal);background:#f3f7f2;margin-top:18px}.week-main h3{font-size:21px;margin:4px 0}.week-main p,.why{font-size:15px;color:var(--sub)}.why{margin-top:10px}.week-list li{justify-content:flex-start;align-items:baseline;padding:7px 0;font-size:15px}.week-index{font-weight:650;color:var(--teal);min-width:71px}.actions{margin-top:20px;display:flex;align-items:center;flex-wrap:wrap;gap:12px}.edit{display:block;font-weight:650;margin-top:18px}#choice{display:block;width:100%;border:1px solid var(--line);background:white;border-radius:6px;padding:10px}.note-box textarea{display:block;width:100%;border:1px solid var(--line);border-radius:7px;min-height:65px;padding:9px;margin:8px 0}.note-box{margin-top:15px}.note-box summary{color:var(--teal);font-weight:650;cursor:pointer}footer .frame{border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding-top:13px;padding-bottom:18px;gap:10px;color:var(--muted);font-size:13px}footer button{border:0;background:none;text-decoration:underline;color:var(--sub);padding:6px}.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap} [tabindex="-1"]:focus{outline:none}
-@media(max-width:760px){.frame{padding-left:17px;padding-right:17px}.layout{grid-template-columns:1fr;margin-top:18px;gap:12px}.card{padding:19px}main{padding:22px 0}.top{min-height:60px}.answers{gap:8px}.tools{gap:9px}.brand{font-size:22px}.role{font-size:12px}.map-list li{padding:8px 0}.formula{margin:10px 0 16px}.week-main{padding:12px}.week-index{min-width:58px}footer .frame{flex-wrap:wrap}}
-.week-main .eyebrow{color:var(--teal)}
-.week-main .why{margin-top:12px}
-.week-main .why sub,.week-main .why sup{line-height:0}
+:root{
+  /* PathFinder: navy brand band, teal action colour, status colours carry meaning (mastered / partial / gap) */
+  --navy:#113148; --navy-2:#1B4161; --teal:#1B7A73; --teal-soft:#E3F1EF;
+  --paper:#F3F6F9; --card:#FFFFFF; --ink:#16212E; --muted:#5A6878; --line:#DCE3EA;
+  --blue:#1E5A9E; --blue-soft:#E7EFF9; --amber:#A8500C; --amber-soft:#FCEFE2;
+  --font-display:'Manrope', system-ui, sans-serif; --font-body:'Inter', system-ui, sans-serif;
+  --font-math:'STIX Two Text', 'Times New Roman', serif;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid #7CC4BC;outline-offset:2px}
+h1,h2,h3{font-family:var(--font-display);margin:0;text-wrap:balance;color:var(--navy)}
+p{margin:0}
+
+/* top bar */
+.bar{background:var(--navy);color:#fff;padding:12px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand b{font-family:var(--font-display);font-weight:800;font-size:21px;letter-spacing:-.01em}
+.course{font-size:13px;color:#BFD0DD;border-left:1px solid #3A5677;padding-left:10px}
+.grow{flex:1}
+.seg{display:inline-flex;background:rgba(255,255,255,.1);border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;color:#D6E2EC;padding:6px 13px;border-radius:999px;font-size:14px;font-weight:600}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--navy)}
+.badge-demo{font-size:12.5px;font-weight:600;color:#FFE2C2;border:1px solid #E7A869;border-radius:999px;padding:5px 11px;white-space:nowrap}
+
+/* tabs */
+.tabs{background:#fff;border-bottom:1px solid var(--line);display:flex;gap:4px;padding:0 16px;overflow-x:auto}
+.tabs button{border:0;background:none;padding:14px 12px 12px;font-weight:600;font-size:15px;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.tabs button .n{width:22px;height:22px;border-radius:50%;background:var(--paper);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--muted)}
+.tabs button.done .n{background:var(--teal);color:#fff}
+.tabs button[aria-current="page"]{color:var(--navy);border-bottom-color:var(--teal)}
+.tabs button[aria-current="page"] .n{background:var(--navy);color:#fff}
+
+main{max-width:1100px;margin:0 auto;padding:24px 20px 32px;display:flex;flex-direction:column;gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.lead{font-size:17.5px;color:#2A3746;max-width:62ch}
+
+.btn{border:1.5px solid transparent;border-radius:12px;padding:11px 18px;font-weight:600;font-size:15.5px;display:inline-flex;align-items:center;gap:8px;min-height:44px}
+.btn.primary{background:var(--teal);color:#fff}
+.btn.primary:hover{background:#166961}
+.btn.navy{background:var(--navy);color:#fff}
+.btn.ghost{background:#fff;border-color:var(--line);color:var(--navy)}
+.btn.ghost:hover{border-color:var(--teal)}
+.btn.sm{padding:7px 12px;min-height:36px;font-size:14px;border-radius:10px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.link{border:0;background:none;color:var(--teal);font-weight:600;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
+
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:14.5px;font-weight:500}
+.chip[aria-pressed="true"]{border-color:var(--teal);background:var(--teal-soft);color:#0F5D57;font-weight:600}
+
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+@media (max-width:520px){.grid4{grid-template-columns:1fr}.bar{padding:10px 14px}main{padding:18px 14px 28px}.card{padding:18px}}
+
+/* steps */
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:var(--paper)}
+.step .num{font-family:var(--font-display);font-weight:800;color:var(--teal);font-size:15px;min-width:26px}
+.step b{display:block;color:var(--navy)}
+
+/* question */
+.qwrap{max-width:720px;width:100%;margin:0 auto}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--teal);border-radius:99px;transition:width .3s}
+.level{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:var(--muted)}
+.dots{display:inline-flex;gap:4px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line);display:block}
+.dots i.on{background:var(--navy)}
+.qtext{font-size:21px;line-height:1.45;color:var(--ink);font-weight:500}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.opts{grid-template-columns:1fr}}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;min-height:58px;font-size:18px}
+.opt:hover{border-color:var(--teal)}
+.opt .k{width:28px;height:28px;flex:none;border-radius:8px;background:var(--paper);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--muted);font-family:var(--font-body)}
+.opt[aria-pressed="true"]{border-color:var(--teal);background:var(--teal-soft)}
+.opt[aria-pressed="true"] .k{background:var(--teal);color:#fff}
+.opt.good{border-color:var(--teal);background:var(--teal-soft)}
+.opt.bad{border-color:var(--amber);background:var(--amber-soft)}
+.adapt{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:8px 12px;border-radius:10px;background:var(--blue-soft);color:var(--blue)}
+
+/* math */
+.m{font-family:var(--font-math);font-size:1.12em;white-space:nowrap}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.92em;line-height:1.15;margin:0 .15em}
+.frac>span:first-child{border-bottom:1.2px solid currentColor;padding:0 .2em}
+.frac>span:last-child{padding:0 .2em}
+.lim{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;margin-right:.2em}
+.lim>span:last-child{font-size:.62em;margin-top:2px}
+
+/* status */
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 11px;font-size:13.5px;font-weight:700}
+.pill.mastered{background:var(--teal-soft);color:#0F5D57}
+.pill.partial{background:var(--blue-soft);color:var(--blue)}
+.pill.gap{background:var(--amber-soft);color:var(--amber)}
+.meter{height:10px;border-radius:99px;background:var(--paper);overflow:hidden}
+.meter span{display:block;height:100%;border-radius:99px}
+.topic{display:flex;flex-direction:column;gap:12px;border-top:4px solid var(--line)}
+.topic.mastered{border-top-color:var(--teal)} .topic.partial{border-top-color:var(--blue)} .topic.gap{border-top-color:var(--amber)}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* plan */
+.banner{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;border-radius:14px;padding:14px 18px;font-weight:600}
+.banner.wait{background:var(--amber-soft);color:#7A3A06;border:1px solid #F1CFA8}
+.banner.ok{background:var(--teal-soft);color:#0F5D57;border:1px solid #B9DCD7}
+.weeks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+@media (max-width:980px){.weeks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.weeks{grid-template-columns:1fr}}
+.week h3{font-size:16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:baseline}
+.task{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.task.isdone{background:#F7FAF9}
+.task.isdone .tt{text-decoration:line-through;color:var(--muted)}
+.task .tt{font-weight:700;color:var(--navy);display:flex;gap:8px;align-items:center}
+.task .kind{font-size:13.5px;color:var(--muted)}
+.lo{font-size:12px;font-weight:700;color:var(--muted);background:var(--paper);border-radius:6px;padding:2px 7px;align-self:flex-start}
+.why{font-size:13.5px;background:var(--paper);border-radius:10px;padding:10px;color:#2A3746}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.dot.mastered{background:var(--teal)} .dot.partial{background:var(--blue)} .dot.gap{background:var(--amber)} .dot.tutor{background:var(--navy)}
+.tag-new{font-size:11.5px;font-weight:700;color:#fff;background:var(--navy);border-radius:6px;padding:1px 6px}
+
+/* check-in */
+label.q{font-weight:700;color:var(--navy);display:block;margin-bottom:10px}
+textarea{width:100%;min-height:76px;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;resize:vertical}
+input[type=range]{width:100%;accent-color:var(--teal)}
+.changes{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.changes li{display:flex;gap:10px;align-items:flex-start;background:var(--teal-soft);border-radius:10px;padding:10px 12px;color:#0F4F49;font-weight:500}
+
+/* teacher */
+.kpi{display:flex;flex-direction:column;gap:4px}
+.kpi b{font-family:var(--font-display);font-size:30px;color:var(--navy);font-variant-numeric:tabular-nums;line-height:1.1}
+.stack{display:flex;height:26px;border-radius:8px;overflow:hidden;font-size:12px;font-weight:700;color:#fff}
+.stack span{display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.checkpoints{background:var(--navy);color:#fff;border-radius:14px;padding:14px 18px;font-weight:600;display:flex;gap:12px;align-items:center}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{text-align:left;font-size:13px;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.st{font-size:13.5px;font-weight:700;border-radius:999px;padding:3px 10px;display:inline-block;white-space:nowrap}
+.st.wait{background:var(--amber-soft);color:var(--amber)} .st.ok{background:var(--teal-soft);color:#0F5D57} .st.none{background:var(--paper);color:var(--muted)} .st.rej{background:#F3E8E8;color:#8A2B2B}
+.check{display:flex;gap:10px;align-items:center;font-size:14.5px}
+.check input{width:18px;height:18px;accent-color:var(--teal)}
+
+/* modal + toast */
+.overlay{position:fixed;inset:0;background:rgba(17,49,72,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}
+.modal{background:#fff;border-radius:18px;max-width:640px;width:100%;max-height:92%;overflow:auto;padding:24px;display:flex;flex-direction:column;gap:16px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 18px;border-radius:12px;font-weight:600;box-shadow:0 8px 24px rgba(17,49,72,.25);z-index:30;max-width:calc(100% - 32px)}
+.example{font-family:var(--font-math);font-size:18px;background:var(--paper);border-radius:12px;padding:12px 14px}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 28px;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<header><div class="frame top"><div class="brand"><span class="mark" aria-hidden="true"></span>PathFinder</div><div class="tools"><span id="role" class="role"></span><select id="lang" aria-label="Language / Язык / Тіл"><option value="en">English</option><option value="ru">Русский</option><option value="kk">Қазақша</option></select></div></div></header>
-<main><div class="frame"><div class="kicker" id="course"></div><h1 id="title" tabindex="-1"></h1><p class="lead" id="intro"></p><div class="layout"><section class="card" id="panel" aria-labelledby="section-title"></section><aside class="card side" id="map"></aside></div></div></main>
-<footer><div class="frame"><span id="credit"></span><button type="button" id="restart"></button></div></footer><div id="say" class="sr" role="status"></div>
+<div id="app"></div>
 <script>
-'use strict';
-// Concept identifiers and labels are drawn from the MIT-licensed Mathua concept graph.
-// The questions, response rules and teacher-approval flow are specific to this prototype.
-const topics=[
- {id:'alg.func.notation',name:['Functions','Функции','Функциялар'],lesson:['Evaluating functions','Вычисление значений функций','Функцияның мәнін табу'],alt:['Reading a function table','Чтение таблицы значений функции','Функция кестесін оқу']},
- {id:'trig.basics.unit_circle',name:['Trigonometry','Тригонометрия','Тригонометрия'],lesson:['Angles on the unit circle','Углы на единичной окружности','Бірлік шеңбердегі бұрыштар'],alt:['A sketch of the unit circle','Эскиз единичной окружности','Бірлік шеңбердің сызбасы']},
- {id:'calc.limit.numeric',name:['Limits','Пределы','Шектер'],lesson:['Estimating limits','Оценка пределов','Шекті бағалау'],alt:['Limits from a table','Предел по таблице','Кесте арқылы шекті табу']},
- {id:'alg.log.evaluate',name:['Logarithms','Логарифмы','Логарифмдер'],lesson:['Logarithms as exponents','Логарифм как показатель степени','Логарифм және дәреже көрсеткіші'],alt:['Matching powers and logarithms','Соответствие степеней и логарифмов','Дәрежелер мен логарифмдерді сәйкестендіру']}
+"use strict";
+/* ---------- content ---------- */
+var TOPICS=["functions","trig","logs","limits"];
+var fr=function(a,b){return '<span class="frac"><span>'+a+'</span><span>'+b+'</span></span>'};
+var lim=function(s){return '<span class="lim"><span>lim</span><span>'+s+'</span></span>'};
+var DNE={en:"Does not exist",ru:"Не существует",kz:"Жоқ"};
+var FIND={en:"Find {e}.",ru:"Найдите {e}.",kz:"{e} мәнін табыңыз."};
+var SOLVE={en:"Solve {e}.",ru:"Решите уравнение {e}.",kz:"{e} теңдеуін шешіңіз."};
+
+var Q={
+ functions:{
+  E:{t:{en:"If {e}, find f(4).",ru:"Если {e}, найдите f(4).",kz:"Егер {e} болса, f(4) мәнін табыңыз."},e:"f(x) = 2x + 3",o:["8","11","14","7"],a:1},
+  M:{t:{en:"Let {e}. Find f(g(1)).",ru:"Пусть {e}. Найдите f(g(1)).",kz:"{e} болсын. f(g(1)) мәнін табыңыз."},e:"f(x) = x<sup>2</sup> − 1,&nbsp; g(x) = x + 2",o:["2","9","8","3"],a:2},
+  H:{t:{en:"Find the inverse function of {e}.",ru:"Найдите обратную функцию к {e}.",kz:"{e} функциясына кері функцияны табыңыз."},e:"f(x) = "+fr("2x − 1","3"),o:[fr("3x − 1","2"),fr("3x + 1","2"),fr("3","2x − 1"),fr("2x + 1","3")],a:1}
+ },
+ trig:{
+  E:{t:FIND,e:"sin 30°",o:[fr("√3","2"),"1",fr("1","2"),fr("√2","2")],a:2},
+  M:{t:{en:"Solve {e}.",ru:"Решите: {e}.",kz:"Теңдеуді шешіңіз: {e}."},e:"sin x = "+fr("1","2")+",&nbsp; 0 ≤ x ≤ "+fr("π","2"),o:[fr("π","3"),fr("π","6"),fr("π","4"),fr("π","2")],a:1},
+  H:{t:{en:"Simplify {e}.",ru:"Упростите {e}.",kz:"{e} өрнегін ықшамдаңыз."},e:fr("sin<sup>2</sup>x","1 − cos x"),o:["1 − cos x","sin x","1 + cos x","cos x"],a:2}
+ },
+ logs:{
+  E:{t:FIND,e:"log<sub>2</sub> 8",o:["4","3","2","6"],a:1},
+  M:{t:SOLVE,e:"log<sub>3</sub> x = 4",o:["12","64","7","81"],a:3},
+  H:{t:SOLVE,e:"log<sub>2</sub> x + log<sub>2</sub>(x − 2) = 3",o:["−2","4",{en:"4 and −2",ru:"4 и −2",kz:"4 және −2"},"2"],a:1}
+ },
+ limits:{
+  E:{t:FIND,e:lim("x→2")+"(3x + 1)",o:["6","5","7","∞"],a:2},
+  M:{t:FIND,e:lim("x→3")+fr("x<sup>2</sup> − 9","x − 3"),o:["0","6","3",DNE],a:1},
+  H:{t:FIND,e:lim("x→0")+fr("sin 3x","x"),o:["1","0","3",fr("1","3")],a:2}
+ }
+};
+
+var LESSON={
+ functions:{
+  ex:{en:"A function gives exactly one output for each input. To find f(g(x)), work from the inside: first g(x), then put the result into f.",ru:"Функция даёт ровно одно значение для каждого x. Чтобы найти f(g(x)), идите изнутри: сначала g(x), потом подставьте результат в f.",kz:"Функция әр x үшін дәл бір мән береді. f(g(x)) табу үшін іштен бастаңыз: алдымен g(x), содан кейін нәтижені f-ке қойыңыз."},
+  sample:"g(x) = x + 2,&nbsp; f(x) = x<sup>2</sup> − 1 &nbsp;⇒&nbsp; f(g(1)) = f(3) = 8",
+  p:{t:{en:"Let {e}. Find f(g(5)).",ru:"Пусть {e}. Найдите f(g(5)).",kz:"{e} болсын. f(g(5)) мәнін табыңыз."},e:"f(x) = 3x,&nbsp; g(x) = x − 1",o:["15","12","14","4"],a:1},
+  hint:{en:"Start inside: find g(5) first.",ru:"Начните изнутри: сначала найдите g(5).",kz:"Іштен бастаңыз: алдымен g(5) мәнін табыңыз."},
+  fb:"g(5) = 4 &nbsp;⇒&nbsp; f(4) = 3 · 4 = 12"
+ },
+ trig:{
+  ex:{en:"On the unit circle, cos is the x-coordinate and sin is the y-coordinate. Learn the key angles: 30°, 45° and 60°.",ru:"На единичной окружности cos — это координата x, а sin — координата y. Запомните ключевые углы: 30°, 45° и 60°.",kz:"Бірлік шеңберде cos — x координатасы, sin — y координатасы. Негізгі бұрыштарды есте сақтаңыз: 30°, 45° және 60°."},
+  sample:"sin 30° = cos 60° = "+fr("1","2")+",&nbsp;&nbsp; sin 60° = cos 30° = "+fr("√3","2"),
+  p:{t:FIND,e:"cos 60°",o:[fr("√3","2"),"0",fr("1","2"),fr("√2","2")],a:2},
+  hint:{en:"cos 60° equals sin 30°.",ru:"cos 60° равен sin 30°.",kz:"cos 60° мәні sin 30°-қа тең."},
+  fb:"cos 60° = sin 30° = "+fr("1","2")
+ },
+ logs:{
+  ex:{en:"log_a b = c means a to the power c equals b. Product rule: the sum of two logs with the same base is the log of the product.",ru:"log_a b = c означает, что a в степени c равно b. Правило произведения: сумма логарифмов с одним основанием равна логарифму произведения.",kz:"log_a b = c дегеніміз a санының c дәрежесі b-ға тең. Көбейтінді ережесі: негіздері бірдей логарифмдердің қосындысы көбейтіндінің логарифміне тең."},
+  sample:"2<sup>3</sup> = 8 &nbsp;⇒&nbsp; log<sub>2</sub> 8 = 3 &nbsp;&nbsp;|&nbsp;&nbsp; log<sub>a</sub> x + log<sub>a</sub> y = log<sub>a</sub>(xy)",
+  p:{t:FIND,e:"log<sub>5</sub> 25",o:["5","2","3",fr("1","2")],a:1},
+  hint:{en:"5 to what power gives 25?",ru:"В какую степень нужно возвести 5, чтобы получить 25?",kz:"25 шығу үшін 5-ті қандай дәрежеге шығару керек?"},
+  fb:"5<sup>2</sup> = 25 &nbsp;⇒&nbsp; log<sub>5</sub> 25 = 2"
+ },
+ limits:{
+  ex:{en:"A limit is the value f(x) gets close to as x gets close to a. If you get 0/0, factor and cancel first.",ru:"Предел — это значение, к которому приближается f(x), когда x приближается к a. Если получилось 0/0, сначала разложите на множители и сократите.",kz:"Шек — x саны a-ға жақындағанда f(x) жақындайтын мән. 0/0 шықса, алдымен көбейткіштерге жіктеп, қысқартыңыз."},
+  sample:fr("x<sup>2</sup> − 9","x − 3")+" = x + 3 &nbsp;⇒&nbsp; "+lim("x→3")+"(x + 3) = 6",
+  p:{t:FIND,e:lim("x→1")+fr("x<sup>2</sup> − 1","x − 1"),o:["0","1","2",DNE],a:2},
+  hint:{en:"x² − 1 = (x − 1)(x + 1).",ru:"x² − 1 = (x − 1)(x + 1).",kz:"x² − 1 = (x − 1)(x + 1)."},
+  fb:fr("x<sup>2</sup> − 1","x − 1")+" = x + 1 &nbsp;⇒&nbsp; 1 + 1 = 2"
+ }
+};
+
+var LO={functions:"LO1",trig:"LO2",logs:"LO3",limits:"LO4"};
+var BANK=[
+ {id:"b1",topic:"logs",lvl:"M",e:"log<sub>4</sub> x = 3",t:SOLVE,ans:"64"},
+ {id:"b2",topic:"limits",lvl:"M",e:lim("x→2")+fr("x<sup>2</sup> − 4","x − 2"),t:FIND,ans:"4"},
+ {id:"b3",topic:"trig",lvl:"E",e:"tan 45°",t:FIND,ans:"1"}
 ];
-const tr={
- en:{course:'Calculus I · First-year foundations',student:'Student view',tutor:'Tutor view',diag:'Prerequisite check',dIntro:'Answer five short questions to build your personal study plan.',question:'Question',of:'of',choose:'Choose one answer.',map:'My knowledge map',signals:'Diagnostic results',unknown:'Unchecked',mastered:'Mastered',partial:'Partial',gap:'Gap',approx:'Provisional results from this short check.',plan:'My study plan',pIntro:'Review your results and send the four-week plan to your tutor.',tTitle:'Review the study plan',tIntro:'Keep the suggested activity or replace it before you approve the plan.',done:'My approved plan',aIntro:'Your tutor has reviewed the activities. Start with this week’s focus.',week:'Week',draft:'Awaiting tutor review',approved:'Approved by tutor',suggest:'Suggested activities',focus:'This week',why:'Why this task?',whyGap:'Your answers point to a gap in',whyPartial:'Your answers show partial understanding of',whyMaster:'Your answers suggest you are ready for a challenge in',review:'Spaced review',transfer:'Apply both topics in a mixed exercise',retry:'Repeat the prerequisite check',tutorBtn:'Review as tutor',approve:'Approve plan',back:'Back to student',edit:'Activity for week 1',lesson:'10-minute lesson + 6 tasks',alt:'Worked example + 3 guided tasks',practice:'Extension practice',practiceAlt:'Explain a worked example',feedback:'Previous answer',correct:'Correct',incorrect:'Needs practice',reflect:'Weekly check-in',reflection:'What was hard? What will you try next?',save:'Save reflection',saved:'Reflection saved on this device.',restart:'Restart demo',mode:'Illustrative progress',q1:'Evaluate the function at x = 3.',q2:'Find this exact value.',q3:'Evaluate the limit.',q4:'Find the logarithm.',easy:'Try a simpler prerequisite. Find the missing exponent.',hard:'Try a harder logarithm.',label:'Study plan',reason:'Focus',editnote:'Tutor selected an alternative activity.'},
- ru:{course:'Математический анализ I · Первый курс',student:'Студент',tutor:'Тьютор',diag:'Входная диагностика',dIntro:'Ответьте на пять вопросов, чтобы получить индивидуальный план.',question:'Вопрос',of:'из',choose:'Выберите один ответ.',map:'Моя карта знаний',signals:'Результаты диагностики',unknown:'Не проверено',mastered:'Освоено',partial:'Частично',gap:'Пробел',approx:'Предварительная оценка по короткому тесту.',plan:'Мой учебный план',pIntro:'Проверьте результаты и передайте план на четыре недели тьютору.',tTitle:'Проверка учебного плана',tIntro:'Оставьте предложенное занятие или замените его перед утверждением.',done:'Утверждённый план',aIntro:'Тьютор проверил задания. Начните с плана на эту неделю.',week:'Неделя',draft:'Ожидает проверки',approved:'Утверждено тьютором',suggest:'Предложенные задания',focus:'На этой неделе',why:'Почему это задание?',whyGap:'По вашим ответам стоит восполнить пробел по теме',whyPartial:'Ваши ответы показывают частичное понимание темы',whyMaster:'По вашим ответам можно перейти к усложнённым заданиям по теме',review:'Интервальное повторение',transfer:'Применить обе темы в одной задаче',retry:'Повторить входную диагностику',tutorBtn:'Открыть как тьютор',approve:'Утвердить план',back:'Вернуться к студенту',edit:'Занятие на первую неделю',lesson:'Урок на 10 минут и 6 задач',alt:'Разбор примера и 3 задачи с подсказками',practice:'Усложнённая практика',practiceAlt:'Объяснить решение примера',feedback:'Предыдущий ответ',correct:'Верно',incorrect:'Нужна практика',reflect:'Рефлексия за неделю',reflection:'Что было трудно? Что попробуете дальше?',save:'Сохранить ответ',saved:'Ответ сохранён на этом устройстве.',restart:'Начать заново',mode:'Пример прогресса',q1:'Найдите значение функции при x = 3.',q2:'Найдите точное значение.',q3:'Вычислите предел.',q4:'Вычислите логарифм.',easy:'Попробуйте базовое задание. Найдите показатель степени.',hard:'Попробуйте более сложный логарифм.',label:'Учебный план',reason:'Тема',editnote:'Тьютор выбрал другое занятие.'},
- kk:{course:'Математикалық талдау I · Бірінші курс',student:'Студент',tutor:'Тьютор',diag:'Бастапқы білімді тексеру',dIntro:'Жеке оқу жоспарын алу үшін бес қысқа сұраққа жауап беріңіз.',question:'Сұрақ',of:'/',choose:'Бір жауапты таңдаңыз.',map:'Менің білім картам',signals:'Диагностика нәтижелері',unknown:'Тексерілмеген',mastered:'Меңгерілген',partial:'Жартылай',gap:'Олқылық',approx:'Қысқа тексеру бойынша алдын ала бағалау.',plan:'Менің оқу жоспарым',pIntro:'Нәтижені қарап, төрт апталық жоспарды тьюторға жіберіңіз.',tTitle:'Оқу жоспарын тексеру',tIntro:'Ұсынылған тапсырманы қалдырыңыз немесе жоспарды бекітпес бұрын ауыстырыңыз.',done:'Бекітілген жоспарым',aIntro:'Тьютор тапсырмаларды қарап шықты. Осы аптаға белгіленген тақырыптан бастаңыз.',week:'Апта',draft:'Тьютор тексеруін күтуде',approved:'Тьютор бекітті',suggest:'Ұсынылған тапсырмалар',focus:'Осы аптада',why:'Бұл тапсырма не үшін берілді?',whyGap:'Жауаптарыңыз мына тақырыпта олқылық барын көрсетті',whyPartial:'Жауаптарыңыз мына тақырыпты ішінара меңгергеніңізді көрсетті',whyMaster:'Жауаптарыңыз мына тақырып бойынша күрделі тапсырмаға дайын екеніңізді көрсетті',review:'Аралықпен қайталау',transfer:'Екі тақырыпты бір есепте қолдану',retry:'Бастапқы білімді қайта тексеру',tutorBtn:'Тьютор ретінде қарау',approve:'Жоспарды бекіту',back:'Студентке оралу',edit:'Бірінші аптаның тапсырмасы',lesson:'10 минуттық сабақ және 6 есеп',alt:'Шешілген мысал және нұсқауы бар 3 есеп',practice:'Күрделі жаттығулар',practiceAlt:'Мысалдың шешімін түсіндіру',feedback:'Алдыңғы жауап',correct:'Дұрыс',incorrect:'Жаттығу қажет',reflect:'Апталық рефлексия',reflection:'Не қиын болды? Келесі жолы нені байқап көресіз?',save:'Жауапты сақтау',saved:'Жауап осы құрылғыда сақталды.',restart:'Қайта бастау',mode:'Үлгі нәтиже',q1:'x = 3 болғанда функцияның мәнін табыңыз.',q2:'Нақты мәнін табыңыз.',q3:'Шекті есептеңіз.',q4:'Логарифмді есептеңіз.',easy:'Жеңілдеу тапсырма. Белгісіз дәреже көрсеткішін табыңыз.',hard:'Күрделірек логарифмді есептеңіз.',label:'Оқу жоспары',reason:'Тақырып',editnote:'Тьютор басқа тапсырманы таңдады.'}
+var GROUP={functions:[62,28,10],trig:[41,37,22],logs:[30,29,41],limits:[35,40,25]};
+
+/* ---------- strings ---------- */
+var S={
+en:{demo:"Demo · rule-based · AI engine planned",student:"Student",teacher:"Teacher",
+ tabDiag:"Diagnose",tabMap:"Knowledge map",tabPlan:"My plan",tabCheck:"Check-in",tabGroup:"Group",tabAppr:"Plans to approve",tabBank:"Question review",
+ hi:"Hi, Aruzhan",intro:"Before Calculus I gets hard, let’s see what you already know. About 8 questions, up to 15 minutes. No grades: only you and your tutor see the results.",
+ goal:"My goal for the first 4 weeks",goals:["Close my gaps before the midterm","Feel confident with limits","Aim for an A in Calculus I"],
+ checked:"Topics we check",start:"Start diagnostic",shortcut:"Demo shortcut: use sample answers",how:"How PathFinder works",
+ steps:[["Diagnose","15-minute adaptive test"],["Map","Mastered · partial · gap"],["Plan","4 weeks, your tutor approves"],["Reflect","Weekly check-in, the plan updates"]],
+ qof:"Question {n} of {t}",level:"Level",lv:{E:"Easy",M:"Medium",H:"Hard"},adapts:"The level adapts to your answers",dk:"I don’t know yet",next:"Next",
+ harder:"Next question: harder",easier:"Next question: easier",topicDone:"Topic checked. Next topic",lastDone:"Diagnostic complete",seeMap:"See my knowledge map",
+ noGrade:"No grades. This is your starting point.",
+ mapTitle:"Your knowledge map",mapNote:"This is an estimate of your level, not a grade. Your tutor can adjust it.",
+ st:{mastered:"Mastered",partial:"Partial",gap:"Gap"},
+ seen:{mastered:"Correct on medium and hard questions",partialHigh:"Medium correct, hard not yet",partialLow:"Basic correct, medium not yet",gap:"Basic and medium not yet correct"},
+ estimate:"Estimate",build:"Build my 4-week plan",needDiag:"Take the diagnostic first, or use the sample answers.",goDiag:"Go to diagnostic",
+ planTitle:"Your 4-week plan",waiting:"Waiting for your tutor’s approval",approved:"Approved by your tutor",waitHint:"Switch to Teacher to approve it.",
+ week:"Week {n}",kind:{lesson:"10-min lesson + 6 tasks",practice:"Practice set · 8 tasks",review:"Spaced review · 5 min",tutor:"1:1 tutor session · 20 min",extra:"Extra practice · 6 tasks"},
+ why:"Why this task?",open:"Open",done:"Done",undo:"Undo",prog:"{d} of {t} done",ask:"Ask my tutor to change the plan",asked:"Request sent to your tutor.",
+ lo:"Course outcome {lo}",
+ whyLessonGap:"Your diagnostic showed a gap in {topic}. The lesson starts one step above what you know now (zone of proximal development).",
+ whyLessonPartial:"You know the basics of {topic}, but not the harder questions yet. This lesson starts at that level.",
+ whyPractice:"Practice right after the lesson makes it stick. You move on when the topic is secure (mastery learning).",
+ whyReview:"A short review a few weeks later helps you remember longer (spaced review).",
+ whyMastered:"You already know {topic}. One quick review keeps it fresh.",
+ whyTutor:"Your tutor added a 1:1 session for your biggest gap.",
+ whyExtra:"Added after your check-in: you marked {topic} as hard.",
+ loLine:"Linked to course outcome {lo}: {text}.",
+ los:{functions:"use functions, composition and inverses",trig:"use trigonometric functions and identities",logs:"solve exponential and logarithmic equations",limits:"evaluate limits of functions"},
+ tn:{functions:"Functions",trig:"Trigonometry",logs:"Logarithms",limits:"Limits"},
+ ciTitle:"Week 1 check-in",ciSub:"Two minutes. Your answers update your plan.",ciHard:"What was hard this week?",ciTime:"Finding time",ciMot:"Motivation",
+ ciNext:"What will you try next week?",ciOpts:{tutor:"Ask my tutor",more:"More practice",video:"Video lessons",peer:"Study with a classmate"},
+ ciNote:"Anything else? (optional)",ciConf:"How confident do you feel in Calculus now?",low:"Not at all",high:"Very",send:"Send check-in",
+ ciDone:"Check-in sent. Your plan is updated:",chExtra:"+1 practice set on {topic} in Week 2",chTutor:"Your tutor will check in with you this week",
+ chVideo:"Video is now your default lesson format",chAsk:"Your question goes to your tutor",chPeer:"Study-pair matching suggested for Week 2",chNone:"No changes needed. Keep going!",
+ tutorSees:"Your tutor sees this check-in.",edit:"Edit check-in",needPlan:"Build your plan first.",goMap:"Go to knowledge map",
+ lessonTag:"10-min lesson",tryIt:"Try it",hint:"Show hint",check:"Check",correct:"Correct!",notYet:"Not yet.",close:"Close",markDone:"Mark as done",
+ format:"Format",fmt:["Text","Audio","Video"],fmtSoon:"Audio and video versions come in the full version.",example:"Example",
+ group:"Calculus I · Group A",kStudents:"Students",kDiag:"Diagnostics done",kWait:"Plans to approve",kFlag:"Flagged for support",
+ chart:"Where the group stands",insight:"Biggest gap: {topic}, {p}% of students",session:"Plan a support session",
+ sessionToast:"Support session drafted for {topic}. Students with a gap get an invite.",
+ checkpoints:"AI never grades · every generated question is reviewed · you can change any plan",illus:"Illustrative data",
+ apprTitle:"Plans waiting for approval",cStudent:"Student",cGaps:"Gaps",cStatus:"Status",sWait:"Waiting",sOk:"Approved",sNone:"Diagnostic not finished",sRej:"Rejected",
+ approve:"Approve",reject:"Reject",addTutor:"Add a 1:1 tutor session in Week 1",you:"demo student",noGaps:"No gaps",apprToast:"Plan approved. The student sees it now.",
+ bankTitle:"Suggested practice questions",bankNote:"Demo: made from templates. In the full version AI drafts them. Nothing reaches students before you approve it.",
+ pending:"Waiting for review: {n}",answer:"Answer",
+ foot1:"Illustrative data · rule-based demo, AI engine planned",foot2:"PathFinder · Pedagogy of Higher Education · Astana IT University"},
+ru:{demo:"Демо · работает на правилах · AI-движок в планах",student:"Студент",teacher:"Преподаватель",
+ tabDiag:"Диагностика",tabMap:"Карта знаний",tabPlan:"Мой план",tabCheck:"Рефлексия",tabGroup:"Группа",tabAppr:"Планы на утверждение",tabBank:"Проверка вопросов",
+ hi:"Привет, Аружан",intro:"Пока Calculus I не стал сложным, давайте узнаем, что вы уже знаете. Около 8 вопросов, до 15 минут. Без оценок: результат видите только вы и ваш тьютор.",
+ goal:"Моя цель на первые 4 недели",goals:["Закрыть пробелы до мидтерма","Уверенно решать пределы","Получить A по Calculus I"],
+ checked:"Что проверяем",start:"Начать диагностику",shortcut:"Для показа: заполнить примером",how:"Как работает PathFinder",
+ steps:[["Диагностика","адаптивный тест на 15 минут"],["Карта","освоено · частично · пробел"],["План","4 недели, утверждает тьютор"],["Рефлексия","раз в неделю, план обновляется"]],
+ qof:"Вопрос {n} из {t}",level:"Уровень",lv:{E:"Лёгкий",M:"Средний",H:"Сложный"},adapts:"Уровень подстраивается под ваши ответы",dk:"Пока не знаю",next:"Далее",
+ harder:"Следующий вопрос: сложнее",easier:"Следующий вопрос: проще",topicDone:"Тема проверена. Следующая тема",lastDone:"Диагностика завершена",seeMap:"Открыть карту знаний",
+ noGrade:"Без оценок. Это ваша точка старта.",
+ mapTitle:"Ваша карта знаний",mapNote:"Это оценка уровня, а не отметка. Тьютор может её поправить.",
+ st:{mastered:"Освоено",partial:"Частично",gap:"Пробел"},
+ seen:{mastered:"Верно на среднем и сложном уровне",partialHigh:"Средний уровень верно, сложный пока нет",partialLow:"Базовый уровень верно, средний пока нет",gap:"Базовый и средний уровень пока неверно"},
+ estimate:"Оценка",build:"Составить план на 4 недели",needDiag:"Сначала пройдите диагностику или заполните примером.",goDiag:"К диагностике",
+ planTitle:"Ваш план на 4 недели",waiting:"Ждёт утверждения тьютора",approved:"Утверждено тьютором",waitHint:"Переключитесь на «Преподаватель», чтобы утвердить.",
+ week:"Неделя {n}",kind:{lesson:"Урок 10 мин + 6 заданий",practice:"Практика · 8 заданий",review:"Повторение · 5 мин",tutor:"Встреча с тьютором · 20 мин",extra:"Доп. практика · 6 заданий"},
+ why:"Почему это задание?",open:"Открыть",done:"Готово",undo:"Отменить",prog:"Выполнено {d} из {t}",ask:"Попросить тьютора изменить план",asked:"Запрос отправлен тьютору.",
+ lo:"Результат курса {lo}",
+ whyLessonGap:"Диагностика показала пробел в теме «{topic}». Урок начинается на шаг выше того, что вы уже знаете (зона ближайшего развития).",
+ whyLessonPartial:"Основы темы «{topic}» вы знаете, а сложные вопросы пока нет. Урок начинается с этого уровня.",
+ whyPractice:"Практика сразу после урока закрепляет тему. Дальше вы идёте, когда тема освоена (mastery learning).",
+ whyReview:"Короткое повторение через несколько недель помогает дольше помнить (интервальное повторение).",
+ whyMastered:"Тему «{topic}» вы уже знаете. Одно короткое повторение, чтобы не забыть.",
+ whyTutor:"Тьютор добавил личную встречу по самому большому пробелу.",
+ whyExtra:"Добавлено после рефлексии: вы отметили тему «{topic}» как сложную.",
+ loLine:"Связано с результатом курса {lo}: {text}.",
+ los:{functions:"работать с функциями, композицией и обратными функциями",trig:"использовать тригонометрические функции и тождества",logs:"решать показательные и логарифмические уравнения",limits:"вычислять пределы функций"},
+ tn:{functions:"Функции",trig:"Тригонометрия",logs:"Логарифмы",limits:"Пределы"},
+ ciTitle:"Рефлексия за 1-ю неделю",ciSub:"Две минуты. Ответы обновят ваш план.",ciHard:"Что было сложно на этой неделе?",ciTime:"Найти время",ciMot:"Мотивация",
+ ciNext:"Что попробуете на следующей неделе?",ciOpts:{tutor:"Спросить тьютора",more:"Больше практики",video:"Видеоуроки",peer:"Заниматься с одногруппником"},
+ ciNote:"Что-то ещё? (необязательно)",ciConf:"Насколько уверенно вы сейчас чувствуете себя в Calculus?",low:"Совсем нет",high:"Очень",send:"Отправить",
+ ciDone:"Рефлексия отправлена. План обновлён:",chExtra:"+1 практика по теме «{topic}» на 2-й неделе",chTutor:"Тьютор свяжется с вами на этой неделе",
+ chVideo:"Видео теперь основной формат уроков",chAsk:"Ваш вопрос отправлен тьютору",chPeer:"На 2-й неделе предложим напарника для занятий",chNone:"Изменений нет. Так держать!",
+ tutorSees:"Тьютор видит эту рефлексию.",edit:"Изменить",needPlan:"Сначала составьте план.",goMap:"К карте знаний",
+ lessonTag:"Урок на 10 минут",tryIt:"Попробуйте",hint:"Подсказка",check:"Проверить",correct:"Верно!",notYet:"Пока нет.",close:"Закрыть",markDone:"Отметить как выполненное",
+ format:"Формат",fmt:["Текст","Аудио","Видео"],fmtSoon:"Аудио и видео появятся в полной версии.",example:"Пример",
+ group:"Calculus I · Группа A",kStudents:"Студентов",kDiag:"Прошли диагностику",kWait:"Ждут утверждения",kFlag:"Нужна поддержка",
+ chart:"Уровень группы по темам",insight:"Самый большой пробел: {topic}, {p}% студентов",session:"Запланировать занятие поддержки",
+ sessionToast:"Черновик занятия по теме «{topic}» создан. Студенты с пробелом получат приглашение.",
+ checkpoints:"AI не ставит оценки · каждый созданный вопрос проверяется · вы можете изменить любой план",illus:"Демонстрационные данные",
+ apprTitle:"Планы на утверждение",cStudent:"Студент",cGaps:"Пробелы",cStatus:"Статус",sWait:"Ждёт",sOk:"Утверждён",sNone:"Диагностика не пройдена",sRej:"Отклонён",
+ approve:"Утвердить",reject:"Отклонить",addTutor:"Добавить встречу с тьютором на 1-й неделе",you:"демо-студент",noGaps:"Пробелов нет",apprToast:"План утверждён. Студент уже видит его.",
+ bankTitle:"Предложенные вопросы для практики",bankNote:"Демо: созданы по шаблонам. В полной версии черновики готовит AI. До утверждения студенты их не видят.",
+ pending:"Ждут проверки: {n}",answer:"Ответ",
+ foot1:"Демонстрационные данные · демо на правилах, AI-движок в планах",foot2:"PathFinder · Pedagogy of Higher Education · Astana IT University"},
+kz:{demo:"Демо · ережелерге негізделген · AI-қозғалтқыш жоспарда",student:"Студент",teacher:"Оқытушы",
+ tabDiag:"Диагностика",tabMap:"Білім картасы",tabPlan:"Менің жоспарым",tabCheck:"Рефлексия",tabGroup:"Топ",tabAppr:"Бекітуге жоспарлар",tabBank:"Сұрақтарды тексеру",
+ hi:"Сәлем, Аружан",intro:"Calculus I қиындамай тұрып, не білетініңізді анықтайық. Шамамен 8 сұрақ, 15 минутқа дейін. Баға қойылмайды: нәтижені тек сіз және тьюторыңыз көреді.",
+ goal:"Алғашқы 4 аптаға мақсатым",goals:["Аралық бақылауға дейін олқылықтарды жабу","Шектерді сенімді шешу","Calculus I-ден A алу"],
+ checked:"Тексерілетін тақырыптар",start:"Диагностиканы бастау",shortcut:"Көрсетуге: үлгі жауаптармен толтыру",how:"PathFinder қалай жұмыс істейді",
+ steps:[["Диагностика","15 минуттық бейімделгіш тест"],["Карта","меңгерілген · ішінара · олқылық"],["Жоспар","4 апта, тьютор бекітеді"],["Рефлексия","апта сайын, жоспар жаңарады"]],
+ qof:"Сұрақ {n} / {t}",level:"Деңгей",lv:{E:"Жеңіл",M:"Орташа",H:"Күрделі"},adapts:"Деңгей жауаптарыңызға қарай өзгереді",dk:"Әзірге білмеймін",next:"Келесі",
+ harder:"Келесі сұрақ: күрделірек",easier:"Келесі сұрақ: жеңілірек",topicDone:"Тақырып тексерілді. Келесі тақырып",lastDone:"Диагностика аяқталды",seeMap:"Білім картасын ашу",
+ noGrade:"Баға жоқ. Бұл — сіздің бастапқы нүктеңіз.",
+ mapTitle:"Сіздің білім картаңыз",mapNote:"Бұл баға емес, деңгейді бағалау. Тьютор оны түзете алады.",
+ st:{mastered:"Меңгерілген",partial:"Ішінара",gap:"Олқылық"},
+ seen:{mastered:"Орташа және күрделі сұрақтарға дұрыс жауап",partialHigh:"Орташа деңгей дұрыс, күрделісі әзірге жоқ",partialLow:"Негізгі деңгей дұрыс, орташасы әзірге жоқ",gap:"Негізгі және орташа деңгей әзірге дұрыс емес"},
+ estimate:"Бағалау",build:"4 апталық жоспар құру",needDiag:"Алдымен диагностикадан өтіңіз немесе үлгі жауаптарды қолданыңыз.",goDiag:"Диагностикаға өту",
+ planTitle:"Сіздің 4 апталық жоспарыңыз",waiting:"Тьютордың бекітуін күтуде",approved:"Тьютор бекітті",waitHint:"Бекіту үшін «Оқытушы» рөліне ауысыңыз.",
+ week:"{n}-апта",kind:{lesson:"10 минуттық сабақ + 6 тапсырма",practice:"Жаттығу · 8 тапсырма",review:"Аралықпен қайталау · 5 мин",tutor:"Тьютормен кездесу · 20 мин",extra:"Қосымша жаттығу · 6 тапсырма"},
+ why:"Неге бұл тапсырма?",open:"Ашу",done:"Орындалды",undo:"Болдырмау",prog:"{t} тапсырманың {d}-і орындалды",ask:"Тьютордан жоспарды өзгертуді сұрау",asked:"Сұрау тьюторға жіберілді.",
+ lo:"Курс нәтижесі {lo}",
+ whyLessonGap:"Диагностика «{topic}» тақырыбында олқылық көрсетті. Сабақ сіз білетін деңгейден бір қадам жоғары басталады (жақын даму аймағы).",
+ whyLessonPartial:"«{topic}» негіздерін білесіз, бірақ күрделі сұрақтар әзірге қиын. Сабақ осы деңгейден басталады.",
+ whyPractice:"Сабақтан кейінгі жаттығу білімді бекітеді. Тақырып толық меңгерілгенде ғана келесіге өтесіз (mastery learning).",
+ whyReview:"Бірнеше аптадан кейінгі қысқа қайталау есте ұзақ сақтауға көмектеседі (аралықпен қайталау).",
+ whyMastered:"«{topic}» тақырыбын білесіз. Ұмытпау үшін бір қысқа қайталау.",
+ whyTutor:"Тьютор ең үлкен олқылық бойынша жеке кездесу қосты.",
+ whyExtra:"Рефлексиядан кейін қосылды: «{topic}» тақырыбын қиын деп белгіледіңіз.",
+ loLine:"Курс нәтижесімен байланысты, {lo}: {text}.",
+ los:{functions:"функциялармен, күрделі және кері функциялармен жұмыс істеу",trig:"тригонометриялық функциялар мен тепе-теңдіктерді қолдану",logs:"көрсеткіштік және логарифмдік теңдеулерді шешу",limits:"функция шектерін есептеу"},
+ tn:{functions:"Функциялар",trig:"Тригонометрия",logs:"Логарифмдер",limits:"Шектер"},
+ ciTitle:"1-апта рефлексиясы",ciSub:"Екі минут. Жауаптарыңыз жоспарды жаңартады.",ciHard:"Осы аптада не қиын болды?",ciTime:"Уақыт табу",ciMot:"Мотивация",
+ ciNext:"Келесі аптада не істеп көресіз?",ciOpts:{tutor:"Тьютордан сұрау",more:"Көбірек жаттығу",video:"Бейнесабақтар",peer:"Топтаспен бірге оқу"},
+ ciNote:"Тағы не айтқыңыз келеді? (міндетті емес)",ciConf:"Қазір Calculus бойынша өзіңізді қаншалықты сенімді сезінесіз?",low:"Мүлде",high:"Өте",send:"Жіберу",
+ ciDone:"Рефлексия жіберілді. Жоспар жаңартылды:",chExtra:"2-аптаға «{topic}» бойынша +1 жаттығу",chTutor:"Тьютор осы аптада сізбен байланысады",
+ chVideo:"Енді бейне — сабақтардың негізгі форматы",chAsk:"Сұрағыңыз тьюторға жіберілді",chPeer:"2-аптада бірге оқитын серіктес ұсынамыз",chNone:"Өзгеріс жоқ. Осылай жалғастырыңыз!",
+ tutorSees:"Тьютор бұл рефлексияны көреді.",edit:"Өзгерту",needPlan:"Алдымен жоспар құрыңыз.",goMap:"Білім картасына өту",
+ lessonTag:"10 минуттық сабақ",tryIt:"Байқап көріңіз",hint:"Кеңес",check:"Тексеру",correct:"Дұрыс!",notYet:"Әзірге дұрыс емес.",close:"Жабу",markDone:"Орындалды деп белгілеу",
+ format:"Формат",fmt:["Мәтін","Аудио","Бейне"],fmtSoon:"Аудио және бейне нұсқалары толық нұсқада болады.",example:"Мысал",
+ group:"Calculus I · A тобы",kStudents:"Студент",kDiag:"Диагностикадан өтті",kWait:"Бекітуді күтуде",kFlag:"Қолдау қажет",
+ chart:"Топтың тақырыптар бойынша деңгейі",insight:"Ең үлкен олқылық: {topic}, студенттердің {p}%",session:"Қолдау сабағын жоспарлау",
+ sessionToast:"«{topic}» бойынша қолдау сабағының жобасы жасалды. Олқылығы бар студенттер шақыру алады.",
+ checkpoints:"AI баға қоймайды · әр жасалған сұрақ тексеріледі · кез келген жоспарды өзгерте аласыз",illus:"Демонстрациялық деректер",
+ apprTitle:"Бекітуді күтетін жоспарлар",cStudent:"Студент",cGaps:"Олқылықтар",cStatus:"Күйі",sWait:"Күтуде",sOk:"Бекітілді",sNone:"Диагностика аяқталмаған",sRej:"Қабылданбады",
+ approve:"Бекіту",reject:"Қабылдамау",addTutor:"1-аптаға тьютормен жеке кездесу қосу",you:"демо студент",noGaps:"Олқылық жоқ",apprToast:"Жоспар бекітілді. Студент оны қазір көреді.",
+ bankTitle:"Ұсынылған жаттығу сұрақтары",bankNote:"Демо: үлгілер бойынша жасалған. Толық нұсқада жобаларын AI дайындайды. Сіз бекітпейінше студенттер оларды көрмейді.",
+ pending:"Тексеруді күтуде: {n}",answer:"Жауап",
+ foot1:"Демонстрациялық деректер · ережелерге негізделген демо, AI-қозғалтқыш жоспарда",foot2:"PathFinder · Pedagogy of Higher Education · Astana IT University"}
 };
-const items=[
- {topic:0,key:'q1',math:'f(x) = 2x + 1',options:['5','7','9'],answer:1},
- {topic:1,key:'q2',math:'sin(π / 2)',options:['0','½','1'],answer:2},
- {topic:2,key:'q3',math:'lim<sub>x → 2</sub> (x + 1)',options:['3','2','1'],answer:0},
- {topic:3,key:'q4',math:'log<sub>2</sub>(8)',options:['2','3','4'],answer:1},
- {topic:3,key:'easy',math:'2<sup>?</sup> = 4',options:['1','2','4'],answer:1},
- {topic:3,key:'hard',math:'log<sub>3</sub>(1 / 9)',options:['−2','2','−3'],answer:0}
-];
-const key='pathfinder-final-v1';
-function empty(lang='en'){return {lang,answers:[],stage:'quiz',variant:0,note:''};}
-function currentItem(answers,index){return items[index<4?index:answers[3]===items[3].answer?5:4];}
-function fromStorage(){
- try{const s=JSON.parse(sessionStorage.getItem(key));if(!s||!Object.hasOwn(tr,s.lang)||!Array.isArray(s.answers)||s.answers.length>5||s.answers.some(n=>!Number.isInteger(n)||n<0||n>2)||typeof s.note!=='string'||s.note.length>600||![0,1].includes(s.variant))return empty();
- if(s.answers.length<5?s.stage!=='quiz':!['plan','tutor','done'].includes(s.stage))return empty();return s;}catch{return empty();}
+
+/* ---------- state ---------- */
+var st={lang:"en",role:"student",sTab:"diag",tTab:"group",goal:0,
+ diag:{phase:"intro",ti:0,lvl:"M",n:0,sel:null,answered:false,path:{}},
+ res:null,plan:null,approved:false,tutor:false,
+ ci:{hard:[],next:[],conf:3,note:"",sent:false,changes:[]},
+ lesson:null,openWhy:{},
+ others:[{name:"Daniyar K.",gaps:["limits","trig"],s:"wait"},{name:"Madina T.",gaps:["logs"],s:"wait"},{name:"Timur A.",gaps:[],s:"ok"},{name:"Aigerim N.",gaps:["functions","logs"],s:"wait"}],
+ bank:{b1:"wait",b2:"wait",b3:"wait"},toast:null};
+try{var L=localStorage.getItem("pf-lang");if(L&&S[L])st.lang=L}catch(e){}
+if(location.hash==="#teacher")st.role="teacher";
+
+function t(k,v){var s=S[st.lang][k];if(s===undefined)s=S.en[k];if(typeof s==="string"&&v){Object.keys(v).forEach(function(x){s=s.split("{"+x+"}").join(v[x])})}return s}
+function tn(id){return S[st.lang].tn[id]}
+function loc(o){return typeof o==="string"?o:(o[st.lang]||o.en)}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function qtext(q){return loc(q.t).replace("{e}",'<span class="m">'+q.e+"</span>")}
+
+/* ---------- rule-based engine ---------- */
+function statusOf(p){ // p = {M:bool, H:bool|undefined, E:bool|undefined}
+ if(p.M&&p.H)return{s:"mastered",seen:"mastered",pct:90};
+ if(p.M)return{s:"partial",seen:"partialHigh",pct:65};
+ if(p.E)return{s:"partial",seen:"partialLow",pct:45};
+ return{s:"gap",seen:"gap",pct:15};
 }
-let state=fromStorage();
-function persist(){try{sessionStorage.setItem(key,JSON.stringify(state));}catch{}}
-const $=s=>document.getElementById(s);
-function statuses(){
- return topics.map((_,i)=>{const indices=i===3?[3,4]:[i];const answered=indices.filter(n=>n<state.answers.length);if(!answered.length)return 'unknown';const hits=answered.filter(n=>state.answers[n]===currentItem(state.answers,n).answer).length;if(i===3&&answered.length===1)return hits?'partial':'gap';return hits===answered.length?'mastered':hits===0?'gap':'partial';});
+function computeResults(path){var r={};TOPICS.forEach(function(id){r[id]=statusOf(path[id])});return r}
+function buildPlan(){
+ var items=[],k=0;function add(w,topic,kind,why){items.push({id:"i"+(k++),w:w,topic:topic,kind:kind,why:why,done:false})}
+ var gaps=TOPICS.filter(function(x){return st.res[x].s==="gap"}),parts=TOPICS.filter(function(x){return st.res[x].s==="partial"}),mast=TOPICS.filter(function(x){return st.res[x].s==="mastered"});
+ gaps.forEach(function(x){add(1,x,"lesson","whyLessonGap");add(2,x,"practice","whyPractice");add(4,x,"review","whyReview")});
+ parts.forEach(function(x){add(2,x,"lesson","whyLessonPartial");add(3,x,"practice","whyPractice")});
+ mast.forEach(function(x,i){add(i%2?4:3,x,"review","whyMastered")});
+ [1,2,3,4].forEach(function(w){if(!items.some(function(i){return i.w===w})){var x=(parts.concat(gaps,mast))[0];add(w,x,"review","whyReview")}});
+ st.plan=items;st.approved=false;
 }
-function words(){return tr[state.lang];}
-function topicText(topic,field='name'){return topic[field][['en','ru','kk'].indexOf(state.lang)];}
-// Illustrative item likelihoods, P(correct | mastered) and P(correct | learning).
-// These demo parameters are set by hand. Each topic starts with equal prior odds.
-const likelihoods={
- standard:[0.90,0.33],
- easy:[0.96,0.40],
- hard:[0.70,0.23]
+function biggestGap(){var g=TOPICS.filter(function(x){return st.res[x].s==="gap"});if(g.length)return g[0];var p=TOPICS.filter(function(x){return st.res[x].s==="partial"});return p[0]||null}
+
+/* ---------- small views ---------- */
+var ICON={
+ mastered:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
+ partial:'<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>',
+ gap:'<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-dasharray="4 3"/></svg>'
 };
-function recommend(answers){
- const odds=topics.map(()=>1);
- const attempts=answers.map((choice,index)=>{
-  const item=currentItem(answers,index);
-  const correct=choice===item.answer;
-  const [known,learning]=likelihoods[item.key]||likelihoods.standard;
-  odds[item.topic]*=correct?known/learning:(1-known)/(1-learning);
-  return {item,choice,correct,index};
- });
- const challenge=attempts.length===5&&attempts.every(a=>a.correct);
- // Use the strongest topic for an extension, otherwise revisit the weakest.
- // The existing course order breaks ties between equally informative answers.
- const order=[3,2,0,1].sort((a,b)=>challenge?odds[b]-odds[a]:odds[a]-odds[b]);
- const focus=order[0],onTopic=attempts.filter(a=>a.item.topic===focus);
- const evidence=onTopic.filter(a=>!a.correct).pop()||onTopic[onTopic.length-1];
- let activity=topics[focus].id;
- if(focus===3&&challenge)activity='logChallenge';
- else if(focus===3&&evidence.item.key==='hard')activity='logNegative';
- else if(focus===3&&evidence.item.key==='easy')activity='logPowers';
- return {order,evidence,challenge,activity};
+function pill(s){return '<span class="pill '+s+'">'+ICON[s]+t("st")[s]+"</span>"}
+function logo(){return '<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#1B7A73"/><path d="M8 23c3-1 4-5 7-7s6-1 9-7" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><circle cx="8" cy="23" r="2.6" fill="#fff"/><circle cx="24" cy="9" r="2.6" fill="#FFD7A8"/></svg>'}
+function seg(name,items,cur){return '<div class="seg" role="group" aria-label="'+name+'">'+items.map(function(i){return '<button data-act="'+i[0]+'" data-v="'+i[1]+'" aria-pressed="'+(cur===i[1])+'">'+i[2]+"</button>"}).join("")+"</div>"}
+
+function header(){
+ return '<header class="bar"><div class="brand">'+logo()+'<b>PathFinder</b><span class="course">Calculus I</span></div><div class="grow"></div>'+
+ seg("Role",[["role","student",t("student")],["role","teacher",t("teacher")]],st.role)+
+ seg("Language",[["lang","en","EN"],["lang","ru","RU"],["lang","kz","KZ"]],st.lang)+
+ '<span class="badge-demo">'+t("demo")+"</span></header>";
 }
-const aiText={
- en:{label:'AI recommendation',teacher:'Tutor’s choice',why:'Why this task?',all:'You answered all five questions correctly, including',credit:'Teaching prototype · Mathua topics · On-device Bayesian model'},
- ru:{label:'ИИ-рекомендация',teacher:'Выбор преподавателя',why:'Почему это задание?',all:'Все пять ответов верны, в том числе',credit:'Учебный прототип · Темы Mathua · Локальная байесовская модель'},
- kk:{label:'ЖИ ұсынысы',teacher:'Оқытушының таңдауы',why:'Неліктен осы тапсырма?',all:'Бес жауаптың бәрі дұрыс, соның ішінде',credit:'Оқу прототипі · Mathua тақырыптары · Жергілікті Байес моделі'}
-};
-const exercises={
- 'alg.func.notation':['For f(x) = 3x − 2, substitute x = 4. Write the substitution before calculating f(4).','Подставь x = 4 в f(x) = 3x − 2. Запиши подстановку и вычисли f(4).','f(x) = 3x − 2 өрнегіне x = 4 қой. Алдымен өрнекті жазып, содан кейін f(4) мәнін есепте.'],
- 'trig.basics.unit_circle':['Mark π/2 and π on a unit circle. Read the y-coordinate of each point to find its sine.','Отметь π/2 и π на единичной окружности. Найди синус каждого угла по координате y.','Бірлік шеңберде π/2 және π бұрыштарын белгіле. Әр бұрыштың синусын нүктенің y координатасы арқылы тап.'],
- 'calc.limit.numeric':['For g(x) = x + 2, calculate g(2.9) and g(3.1). What value does g(x) approach as x approaches 3?','Для g(x) = x + 2 вычисли g(2,9) и g(3,1). К какому значению приближается g(x), когда x приближается к 3?','g(x) = x + 2 үшін g(2,9) және g(3,1) мәндерін есепте. x саны 3-ке жақындағанда g(x) қай мәнге ұмтылады?'],
- 'alg.log.evaluate':['Rewrite 2³ = 8 as a logarithm. Use the same pattern to find log₂(16).','Перепиши 2³ = 8 в виде логарифма. По этому образцу найди log₂(16).','2³ = 8 теңдігін логарифм түрінде жаз. Осы үлгімен log₂(16) мәнін тап.'],
- logPowers:['Write 2¹, 2² and 2³ as numbers. Use that list to find log₂(4).','Вычисли 2¹, 2² и 2³. По этому списку найди log₂(4).','2¹, 2² және 2³ мәндерін жаз. Осы тізім арқылы log₂(4) мәнін тап.'],
- logNegative:['Rewrite 1/8 as a power of 2, then find log₂(1/8). Explain the sign of the exponent.','Представь 1/8 как степень двойки и найди log₂(1/8). Объясни знак показателя степени.','1/8 санын 2-нің дәрежесі түрінде жазып, log₂(1/8) мәнін тап. Дәреже көрсеткішінің таңбасын түсіндір.'],
- logChallenge:['Find log₄(1/8) by writing both numbers as powers of 2. Explain why the exponent is fractional.','Найди log₄(1/8), записав оба числа как степени двойки. Объясни, почему показатель дробный.','Екі санды да 2-нің дәрежелері түрінде жазып, log₄(1/8) мәнін тап. Дәреже көрсеткішінің неліктен бөлшек екенін түсіндір.']
-};
-const logTitles={
- logPowers:['Start with powers of 2','Начни со степеней двойки','2-нің дәрежелерінен баста'],
- logNegative:['Logarithms of fractions','Логарифмы дробей','Бөлшектердің логарифмдері'],
- logChallenge:['A fractional exponent','Дробный показатель степени','Бөлшек дәреже көрсеткіші']
-};
-function explainRecommendation(r,copy){
- const {item,choice,index}=r.evidence;
- const right=item.options[item.answer],selected=item.options[choice];
- if(r.challenge)return copy.all+' '+item.math+' = '+right+'.';
- const question=index+1;
- if(state.lang==='ru')return `Вопрос ${question} (${item.math}): твой ответ — ${selected}, верный — ${right}.`;
- if(state.lang==='kk')return `${question}-сұрақ (${item.math}): сенің жауабың — ${selected}, дұрыс жауап — ${right}.`;
- return `On question ${question} (${item.math}), you chose ${selected}. The correct answer is ${right}.`;
+function tabs(){
+ if(st.role==="student"){
+  var d={diag:!!st.res,map:!!st.plan,plan:st.plan&&st.plan.every(function(i){return i.done}),check:st.ci.sent};
+  var list=[["diag",t("tabDiag")],["map",t("tabMap")],["plan",t("tabPlan")],["check",t("tabCheck")]];
+  return '<nav class="tabs" aria-label="Student">'+list.map(function(x,i){return '<button data-act="stab" data-v="'+x[0]+'" class="'+(d[x[0]]?"done":"")+'" '+(st.sTab===x[0]?'aria-current="page"':"")+'><span class="n">'+(d[x[0]]?"✓":i+1)+"</span>"+x[1]+"</button>"}).join("")+"</nav>";
+ }
+ var tl=[["group",t("tabGroup")],["appr",t("tabAppr")],["bank",t("tabBank")]];
+ return '<nav class="tabs" aria-label="Teacher">'+tl.map(function(x){return '<button data-act="ttab" data-v="'+x[0]+'" '+(st.tTab===x[0]?'aria-current="page"':"")+">"+x[1]+"</button>"}).join("")+"</nav>";
 }
-function render(focus=false){
- const t=words(),quiz=state.stage==='quiz',tutor=state.stage==='tutor',done=state.stage==='done';
- document.documentElement.lang=state.lang;$('lang').value=state.lang;$('role').textContent=tutor?t.tutor:t.student;$('course').textContent=t.course;
- $('title').textContent=quiz?t.diag:tutor?t.tTitle:done?t.done:t.plan;$('intro').textContent=quiz?t.dIntro:tutor?t.tIntro:done?t.aIntro:t.pIntro;
- $('restart').textContent=t.restart;$('credit').textContent=aiText[state.lang].credit;
- const s=statuses();
- $('map').innerHTML='<div class="eyebrow">'+t.signals+'</div><h2>'+t.map+'</h2><ul class="map-list">'+topics.map((topic,i)=>'<li><span>'+topicText(topic)+'</span><span class="status '+s[i]+'">'+t[s[i]]+'</span></li>').join('')+'</ul><p class="side-note">'+t.approx+'</p>';
- if(quiz)renderQuiz(t);else renderPlan(t,tutor,done);
- if(focus){(quiz?$('section-title'):$('title')).focus({preventScroll:true});}
+
+/* ---------- student views ---------- */
+function vIntro(){
+ return '<div class="grid2"><section class="card" style="display:flex;flex-direction:column;gap:18px">'+
+ '<div class="eyebrow">Calculus I · '+t("tabDiag")+'</div><h1 style="font-size:32px">'+t("hi")+'</h1><p class="lead">'+t("intro")+"</p>"+
+ '<div><div class="small" style="font-weight:700;color:var(--navy);margin-bottom:8px">'+t("goal")+'</div><div class="row">'+t("goals").map(function(g,i){return '<button class="chip" data-act="goal" data-v="'+i+'" aria-pressed="'+(st.goal===i)+'">'+g+"</button>"}).join("")+"</div></div>"+
+ '<div><div class="small" style="font-weight:700;color:var(--navy);margin-bottom:8px">'+t("checked")+'</div><div class="row">'+TOPICS.map(function(x){return '<span class="pill" style="background:var(--paper);color:var(--navy)">'+tn(x)+"</span>"}).join("")+"</div></div>"+
+ '<div class="row" style="margin-top:4px"><button class="btn primary" data-act="start">'+t("start")+' →</button><button class="link" data-act="sample">'+t("shortcut")+"</button></div></section>"+
+ '<section class="card"><h2 style="font-size:20px;margin-bottom:14px">'+t("how")+'</h2><div class="steps">'+t("steps").map(function(s,i){return '<div class="step"'+(i===0?' style="background:var(--teal-soft)"':"")+'><span class="num">0'+(i+1)+"</span><div><b>"+s[0]+'</b><span class="muted small">'+s[1]+"</span></div></div>"}).join("")+
+ '</div><p class="small muted" style="margin-top:14px">'+t("noGrade")+"</p></section></div>";
 }
-function renderQuiz(t){
- const n=state.answers.length,q=currentItem(state.answers,n);
- const previous=n?currentItem(state.answers,n-1):null;
- const feedback=previous?t.feedback+' · '+(state.answers[n-1]===previous.answer?t.correct:t.incorrect)+' · '+previous.math+' → '+previous.options[previous.answer]:t.choose;
- $('panel').innerHTML='<div class="cap"><b>'+topicText(topics[q.topic])+'</b><span class="meta">'+t.question+' '+(n+1)+' '+t.of+' 5</span></div><div class="meter" aria-hidden="true"><span style="width:'+((n+1)*20)+'%"></span></div><h2 class="prompt" id="section-title" tabindex="-1">'+t[q.key]+'</h2><div class="formula">'+q.math+'</div><div class="answers">'+q.options.map((v,i)=>'<button class="answer" data-answer="'+i+'">'+v+'</button>').join('')+'</div><p class="feedback">'+feedback+'</p>';
- $('panel').querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>{state.answers.push(Number(b.dataset.answer));if(state.answers.length===5)state.stage='plan';persist();render(true);});
+function vQuestion(){
+ var d=st.diag,topic=TOPICS[d.ti],q=Q[topic][d.lvl],n=d.n+1,total=8;
+ var lvIdx={E:1,M:2,H:3}[d.lvl];
+ var opts=q.o.map(function(o,i){var cls="";if(d.answered){if(i===d.sel)cls=" "}return '<button class="opt" data-act="pick" data-v="'+i+'" aria-pressed="'+(d.sel===i)+'"'+(d.answered?" disabled":"")+'><span class="k">'+"ABCD"[i]+'</span><span class="m">'+loc(o)+"</span></button>"}).join("");
+ var after="";
+ if(d.answered){var msg=d.note==="harder"?t("harder")+" ↑":d.note==="easier"?t("easier")+" ↓":(d.n+1>=total?t("lastDone"):t("topicDone")+" →");
+  after='<div class="row" style="justify-content:space-between"><span class="adapt">'+msg+'</span><button class="btn primary" data-act="next">'+(d.n+1>=total?t("seeMap"):t("next"))+" →</button></div>"}
+ return '<section class="card qwrap" style="display:flex;flex-direction:column;gap:18px">'+
+ '<div class="row" style="justify-content:space-between"><span class="small muted tnum">'+t("qof",{n:n,t:total})+'</span><span class="level">'+t("level")+': <b style="color:var(--navy)">'+t("lv")[d.lvl]+'</b> <span class="dots"><i class="on"></i><i class="'+(lvIdx>1?"on":"")+'"></i><i class="'+(lvIdx>2?"on":"")+'"></i></span></span></div>'+
+ '<div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="'+total+'" aria-valuenow="'+d.n+'"><span style="width:'+(d.n/total*100)+'%"></span></div>'+
+ '<div class="eyebrow">'+tn(topic)+'</div><p class="qtext">'+qtext(q)+'</p><div class="opts">'+opts+"</div>"+
+ (d.answered?"":'<div class="row" style="justify-content:space-between"><button class="link" data-act="pick" data-v="-1">'+t("dk")+'</button><span class="small muted">'+t("adapts")+"</span></div>")+after+"</section>";
 }
-function renderPlan(t,tutor,done){
- const r=recommend(state.answers),topic=topics[r.order[0]],other=topicText(topics[r.order[1]]);
- const copy=aiText[state.lang],langIndex=['en','ru','kk'].indexOf(state.lang);
- const title=logTitles[r.activity]?.[langIndex]||topicText(topic,'lesson');
- const titles=[title,topicText(topic,'alt')];
- const activity=state.variant?(r.challenge?t.practiceAlt:t.alt):exercises[r.activity][langIndex];
- const reason=state.variant?'':'<p class="why"><strong>'+copy.why+'</strong> '+explainRecommendation(r,copy)+'</p>';
- $('panel').innerHTML='<div class="cap"><h2 id="section-title">'+t.label+'</h2><span class="meta">'+(done?t.approved:t.draft)+'</span></div><div class="week-main"><div class="eyebrow">'+(state.variant?copy.teacher:copy.label)+' · '+t.week+' 1</div><h3>'+titles[state.variant]+'</h3><p>'+activity+'</p>'+reason+'</div><ul class="week-list">'+[t.review+' · '+other,t.transfer,t.retry].map((v,i)=>'<li><span class="week-index">'+t.week+' '+(i+2)+'</span>'+v+'</li>').join('')+'</ul>'+
- (tutor?'<label class="edit" for="choice">'+t.edit+'</label><select id="choice">'+titles.map((v,i)=>'<option value="'+i+'"'+(i===state.variant?' selected':'')+'>'+v+'</option>').join('')+'</select>':'')+
- (done?'<p class="why">'+(state.variant?t.editnote:'')+'</p><details class="note-box" id="reflection"><summary>'+t.reflect+'</summary><label class="edit" for="note">'+t.reflection+'</label><textarea maxlength="600" id="note"></textarea><button id="save" class="quiet">'+t.save+'</button><span id="saved" role="status"></span></details>':'<div class="actions"><button id="next" class="primary">'+(tutor?t.approve:t.tutorBtn)+'</button>'+(tutor?'<button id="back" class="quiet">'+t.back+'</button>':'')+'</div>');
- if(tutor){$('choice').onchange=e=>{state.variant=Number(e.target.value);persist();render();$('choice').focus();};$('back').onclick=()=>go('plan');}
- if(!done)$('next').onclick=()=>go(tutor?'done':'tutor');
- if(done){$('note').value=state.note;$('save').onclick=()=>{state.note=$('note').value.trim();persist();$('saved').textContent=' '+t.saved;};}
+function vMap(){
+ if(!st.res)return needBox(t("needDiag"),"stab","diag",t("goDiag"));
+ var c={mastered:0,partial:0,gap:0};TOPICS.forEach(function(x){c[st.res[x].s]++});
+ var color={mastered:"var(--teal)",partial:"var(--blue)",gap:"var(--amber)"};
+ return '<section class="row" style="justify-content:space-between;align-items:flex-end"><div><div class="eyebrow">'+t("tabMap")+'</div><h1 style="font-size:28px">'+t("mapTitle")+'</h1></div><div class="row">'+["mastered","partial","gap"].map(function(s){return pill(s).replace("</span>"," · "+c[s]+"</span>")}).join("")+"</div></section>"+
+ '<div class="grid2">'+TOPICS.map(function(x){var r=st.res[x];return '<section class="card topic '+r.s+'"><div class="row" style="justify-content:space-between"><h2 style="font-size:20px">'+tn(x)+"</h2>"+pill(r.s)+'</div><p class="muted">'+t("seen")[r.seen]+'</p><div><div class="row small muted" style="justify-content:space-between;margin-bottom:6px"><span>'+t("estimate")+'</span><span class="tnum">'+r.pct+'%</span></div><div class="meter"><span style="width:'+r.pct+"%;background:"+color[r.s]+'"></span></div></div><span class="lo">'+t("lo",{lo:LO[x]})+"</span></section>"}).join("")+"</div>"+
+ '<section class="row" style="justify-content:space-between"><p class="muted small" style="max-width:60ch">'+t("mapNote")+'</p><button class="btn primary" data-act="build">'+t("build")+" →</button></section>";
 }
-function go(stage){state.stage=stage;persist();render(true);}
-$('lang').onchange=e=>{state.lang=e.target.value;persist();render();};
-$('restart').onclick=()=>{state=empty(state.lang);persist();render(true);};
+function needBox(msg,act,v,label){return '<section class="card" style="text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center;padding:40px 22px"><p class="lead">'+msg+'</p><div class="row" style="justify-content:center"><button class="btn primary" data-act="'+act+'" data-v="'+v+'">'+label+'</button><button class="link" data-act="sample">'+t("shortcut")+"</button></div></section>"}
+function vPlan(){
+ if(!st.plan)return st.res?needBox(t("needPlan"),"stab","map",t("goMap")):needBox(t("needDiag"),"stab","diag",t("goDiag"));
+ var doneN=st.plan.filter(function(i){return i.done}).length;
+ var banner=st.approved?'<div class="banner ok"><span class="row">'+ICON.mastered+" "+t("approved")+'</span><span class="small tnum">'+t("prog",{d:doneN,t:st.plan.length})+"</span></div>"
+  :'<div class="banner wait"><span>'+t("waiting")+'</span><button class="btn sm ghost" data-act="role" data-v="teacher">'+t("waitHint")+"</button></div>";
+ var weeks=[1,2,3,4].map(function(w){var its=st.plan.filter(function(i){return i.w===w});
+  return '<section class="week"><h3>'+t("week",{n:w})+'<span class="small muted tnum" style="font-weight:600">'+its.filter(function(i){return i.done}).length+"/"+its.length+"</span></h3>"+its.map(taskCard).join("")+"</section>"}).join("");
+ return '<section class="row" style="justify-content:space-between;align-items:flex-end"><div><div class="eyebrow">'+t("tabPlan")+" · "+t("goals")[st.goal]+'</div><h1 style="font-size:28px">'+t("planTitle")+"</h1></div></section>"+banner+'<div class="weeks">'+weeks+'</div><div class="row"><button class="link" data-act="askChange">'+t("ask")+"</button></div>";
+}
+function taskCard(i){
+ var s=i.kind==="tutor"?"tutor":st.res[i.topic].s;
+ var whyTxt=i.kind==="tutor"?t("whyTutor"):t(i.why,{topic:tn(i.topic)});
+ var loTxt=i.kind==="tutor"?"":" "+t("loLine",{lo:LO[i.topic],text:t("los")[i.topic]});
+ var open=st.openWhy[i.id];
+ return '<article class="task'+(i.done?" isdone":"")+'"><div class="tt"><span class="dot '+s+'"></span>'+tn(i.topic)+(i.isNew?' <span class="tag-new">NEW</span>':"")+'</div><div class="kind">'+t("kind")[i.kind]+"</div>"+
+ (i.kind!=="tutor"?'<span class="lo">'+t("lo",{lo:LO[i.topic]})+"</span>":"")+
+ '<div class="row" style="gap:6px">'+(i.kind==="lesson"&&!i.done?'<button class="btn sm primary" data-act="openLesson" data-v="'+i.id+'">'+t("open")+"</button>":"")+
+ '<button class="btn sm ghost" data-act="toggleDone" data-v="'+i.id+'">'+(i.done?t("undo"):"✓ "+t("done"))+'</button></div><button class="link small" style="align-self:flex-start" data-act="why" data-v="'+i.id+'" aria-expanded="'+(!!open)+'">'+t("why")+"</button>"+
+ (open?'<div class="why">'+whyTxt+loTxt+"</div>":"")+"</article>";
+}
+function vCheck(){
+ if(!st.plan)return st.res?needBox(t("needPlan"),"stab","map",t("goMap")):needBox(t("needDiag"),"stab","diag",t("goDiag"));
+ var c=st.ci;
+ if(c.sent){return '<section class="card qwrap" style="display:flex;flex-direction:column;gap:16px"><div class="eyebrow">'+t("tabCheck")+'</div><h1 style="font-size:26px">'+t("ciDone")+'</h1><ul class="changes">'+c.changes.map(function(x){return "<li>"+ICON.mastered+"<span>"+x+"</span></li>"}).join("")+'</ul><p class="muted small">'+t("tutorSees")+'</p><div class="row"><button class="btn primary" data-act="stab" data-v="plan">'+t("tabPlan")+' →</button><button class="link" data-act="ciEdit">'+t("edit")+"</button></div></section>"}
+ var hardOpts=TOPICS.map(function(x){return[x,tn(x)]}).concat([["time",t("ciTime")],["motivation",t("ciMot")]]);
+ var nextOpts=["tutor","more","video","peer"].map(function(x){return[x,t("ciOpts")[x]]});
+ return '<section class="card qwrap" style="display:flex;flex-direction:column;gap:22px"><div><div class="eyebrow">'+t("tabCheck")+'</div><h1 style="font-size:26px">'+t("ciTitle")+'</h1><p class="muted">'+t("ciSub")+"</p></div>"+
+ '<div><label class="q">'+t("ciHard")+'</label><div class="row">'+hardOpts.map(function(o){return '<button class="chip" data-act="ciHard" data-v="'+o[0]+'" aria-pressed="'+(c.hard.indexOf(o[0])>-1)+'">'+o[1]+"</button>"}).join("")+"</div></div>"+
+ '<div><label class="q">'+t("ciNext")+'</label><div class="row">'+nextOpts.map(function(o){return '<button class="chip" data-act="ciNext" data-v="'+o[0]+'" aria-pressed="'+(c.next.indexOf(o[0])>-1)+'">'+o[1]+"</button>"}).join("")+"</div></div>"+
+ '<div><label class="q" for="conf">'+t("ciConf")+' <span id="confv" class="tnum" style="color:var(--teal)">'+c.conf+'/5</span></label><input id="conf" type="range" min="1" max="5" step="1" value="'+c.conf+'"><div class="row small muted" style="justify-content:space-between"><span>'+t("low")+"</span><span>"+t("high")+"</span></div></div>"+
+ '<div><label class="q" for="note">'+t("ciNote")+'</label><textarea id="note">'+esc(c.note)+"</textarea></div>"+
+ '<div><button class="btn primary" data-act="ciSend">'+t("send")+"</button></div></section>";
+}
+function vLesson(){
+ var L=st.lesson;if(!L)return"";var x=L.topic,ls=LESSON[x],p=ls.p;
+ var opts=p.o.map(function(o,i){var cls="";if(L.checked){if(i===p.a)cls=" good";else if(i===L.sel)cls=" bad"}return '<button class="opt'+cls+'" data-act="lpick" data-v="'+i+'" aria-pressed="'+(L.sel===i)+'"><span class="k">'+"ABCD"[i]+'</span><span class="m">'+loc(o)+"</span></button>"}).join("");
+ var fb="";if(L.checked){var ok=L.sel===p.a;fb='<div class="why" style="background:'+(ok?"var(--teal-soft)":"var(--amber-soft)")+'"><b>'+(ok?t("correct"):t("notYet"))+'</b> <span class="m">'+ls.fb+"</span></div>"}
+ return '<div class="overlay" data-act="closeLesson" data-self="1"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="ltitle">'+
+ '<div class="row" style="justify-content:space-between"><div><div class="eyebrow">'+t("lessonTag")+' · '+t("lo",{lo:LO[x]})+'</div><h2 id="ltitle" style="font-size:24px">'+tn(x)+'</h2></div><button class="btn sm ghost" data-act="closeLesson">'+t("close")+"</button></div>"+
+ '<div class="row small"><span class="muted">'+t("format")+':</span>'+t("fmt").map(function(f,i){return '<button class="chip" data-act="fmt" data-v="'+i+'" aria-pressed="'+((L.fmt||0)===i)+'">'+f+"</button>"}).join("")+"</div>"+
+ ((L.fmt||0)>0?'<p class="small muted">'+t("fmtSoon")+"</p>":"")+
+ "<p>"+loc(ls.ex)+'</p><div><div class="small muted" style="margin-bottom:6px">'+t("example")+'</div><div class="example">'+ls.sample+"</div></div>"+
+ '<div class="eyebrow">'+t("tryIt")+'</div><p class="qtext" style="font-size:19px">'+qtext(p)+'</p><div class="opts">'+opts+"</div>"+
+ (L.hint?'<div class="why">'+loc(ls.hint)+"</div>":"")+fb+
+ '<div class="row" style="justify-content:space-between"><button class="link" data-act="lhint">'+t("hint")+'</button><div class="row">'+(L.checked?'<button class="btn primary" data-act="lessonDone">'+t("markDone")+"</button>":'<button class="btn primary" data-act="lcheck"'+(L.sel==null?" disabled":"")+">"+t("check")+"</button>")+"</div></div></div></div>";
+}
+
+/* ---------- teacher views ---------- */
+function demoRow(){var g=st.res?TOPICS.filter(function(x){return st.res[x].s==="gap"}):[];return{name:"Aruzhan S.",demo:true,gaps:g,s:!st.plan?"none":(st.approved?"ok":"wait")}}
+function vGroup(){
+ var rows=[demoRow()].concat(st.others),waitN=rows.filter(function(r){return r.s==="wait"}).length;
+ var worst=TOPICS.slice().sort(function(a,b){return GROUP[b][2]-GROUP[a][2]})[0];
+ var kpis=[[96,t("kStudents")],["78",t("kDiag")],[waitN,t("kWait")],[12,t("kFlag")]];
+ return '<section class="row" style="justify-content:space-between;align-items:flex-end"><div><div class="eyebrow">'+t("teacher")+'</div><h1 style="font-size:28px">'+t("group")+'</h1></div><span class="small muted">'+t("illus")+"</span></section>"+
+ '<div class="grid4">'+kpis.map(function(k){return '<div class="card kpi"><b>'+k[0]+'</b><span class="muted small">'+k[1]+"</span></div>"}).join("")+"</div>"+
+ '<section class="card" style="display:flex;flex-direction:column;gap:16px"><div class="row" style="justify-content:space-between"><h2 style="font-size:20px">'+t("chart")+'</h2><div class="legend"><span><i class="dot mastered"></i>'+t("st").mastered+'</span><span><i class="dot partial"></i>'+t("st").partial+'</span><span><i class="dot gap"></i>'+t("st").gap+"</span></div></div>"+
+ TOPICS.map(function(x){var g=GROUP[x];return '<div style="display:grid;grid-template-columns:minmax(110px,160px) 1fr;gap:12px;align-items:center"><span style="font-weight:600">'+tn(x)+'</span><div class="stack" role="img" aria-label="'+tn(x)+": "+g[0]+"% / "+g[1]+"% / "+g[2]+'%"><span style="width:'+g[0]+'%;background:var(--teal)">'+g[0]+'%</span><span style="width:'+g[1]+'%;background:var(--blue)">'+g[1]+'%</span><span style="width:'+g[2]+'%;background:var(--amber)">'+g[2]+"%</span></div></div>"}).join("")+
+ '<div class="row" style="justify-content:space-between;border-top:1px solid var(--line);padding-top:14px"><b style="color:var(--amber)">'+t("insight",{topic:tn(worst),p:GROUP[worst][2]})+'</b><button class="btn navy" data-act="session" data-v="'+worst+'">'+t("session")+"</button></div></section>"+
+ '<div class="checkpoints">'+ICON.mastered+"<span>"+t("checkpoints")+"</span></div>";
+}
+function vAppr(){
+ var rows=[demoRow()].concat(st.others);
+ var stCls={wait:"wait",ok:"ok",none:"none"},stTxt={wait:t("sWait"),ok:t("sOk"),none:t("sNone")};
+ return '<section><div class="eyebrow">'+t("teacher")+'</div><h1 style="font-size:28px">'+t("apprTitle")+"</h1></section>"+
+ '<section class="card tbl-wrap"><table><thead><tr><th>'+t("cStudent")+"</th><th>"+t("cGaps")+"</th><th>"+t("cStatus")+"</th><th></th></tr></thead><tbody>"+
+ rows.map(function(r,idx){var gaps=r.gaps.length?r.gaps.map(function(g){return '<span class="pill gap" style="margin:2px">'+tn(g)+"</span>"}).join(""):'<span class="muted small">'+(r.s==="none"?"—":t("noGaps"))+"</span>";
+  var act=r.s==="wait"?'<button class="btn sm primary" data-act="approve" data-v="'+(r.demo?"demo":idx-1)+'">'+t("approve")+"</button>":"";
+  var extra=r.demo&&st.plan?'<label class="check" style="margin-top:8px"><input type="checkbox" id="tutorchk" data-act="tutorToggle"'+(st.tutor?" checked":"")+">"+t("addTutor")+"</label>":"";
+  return "<tr><td><b>"+r.name+"</b>"+(r.demo?' <span class="small muted">('+t("you")+")</span>":"")+extra+"</td><td>"+gaps+'</td><td><span class="st '+stCls[r.s]+'">'+stTxt[r.s]+"</span></td><td style=\"text-align:right\">"+act+"</td></tr>"}).join("")+
+ "</tbody></table></section>"+'<div class="checkpoints">'+ICON.mastered+"<span>"+t("checkpoints")+"</span></div>";
+}
+function vBank(){
+ var n=BANK.filter(function(b){return st.bank[b.id]==="wait"}).length;
+ return '<section class="row" style="justify-content:space-between;align-items:flex-end"><div><div class="eyebrow">'+t("teacher")+'</div><h1 style="font-size:28px">'+t("bankTitle")+'</h1></div><span class="st wait">'+t("pending",{n:n})+"</span></section>"+
+ '<p class="muted" style="max-width:70ch">'+t("bankNote")+"</p>"+
+ '<div class="grid2">'+BANK.map(function(b){var s=st.bank[b.id];
+  return '<section class="card" style="display:flex;flex-direction:column;gap:12px"><div class="row" style="justify-content:space-between"><span class="eyebrow">'+tn(b.topic)+" · "+t("lv")[b.lvl]+'</span><span class="lo">'+LO[b.topic]+'</span></div><p class="qtext" style="font-size:19px">'+qtext(b)+'</p><p class="small muted">'+t("answer")+': <b class="m" style="color:var(--ink)">'+b.ans+"</b></p>"+
+  (s==="wait"?'<div class="row"><button class="btn sm primary" data-act="bank" data-v="'+b.id+'|ok">'+t("approve")+'</button><button class="btn sm ghost" data-act="bank" data-v="'+b.id+'|rej">'+t("reject")+"</button></div>":'<span class="st '+(s==="ok"?"ok":"rej")+'">'+(s==="ok"?t("sOk"):t("sRej"))+"</span>")+"</section>"}).join("")+"</div>"+
+ '<div class="checkpoints">'+ICON.mastered+"<span>"+t("checkpoints")+"</span></div>";
+}
+
+/* ---------- render ---------- */
+function render(){
+ document.documentElement.lang=st.lang==="kz"?"kk":st.lang;
+ var body="";
+ if(st.role==="student"){
+  if(st.sTab==="diag")body=st.diag.phase==="run"?vQuestion():vIntro();
+  else if(st.sTab==="map")body=vMap();else if(st.sTab==="plan")body=vPlan();else body=vCheck();
+ } else {body=st.tTab==="group"?vGroup():st.tTab==="appr"?vAppr():vBank()}
+ document.getElementById("app").innerHTML=header()+tabs()+"<main>"+body+"</main>"+
+  '<footer><span>'+t("foot1")+"</span><span>"+t("foot2")+"</span></footer>"+vLesson()+(st.toast?'<div class="toast" role="status">'+st.toast+"</div>":"");
+}
+var toastTimer;
+function toast(msg){st.toast=msg;clearTimeout(toastTimer);toastTimer=setTimeout(function(){st.toast=null;render()},3200)}
+function findItem(id){return st.plan.filter(function(i){return i.id===id})[0]}
+
+function act(a,v,el,ev){
+ var d=st.diag;
+ switch(a){
+ case "role":st.role=v;try{history.replaceState(null,"",v==="teacher"?"#teacher":"#student")}catch(e){}break;
+ case "lang":st.lang=v;try{localStorage.setItem("pf-lang",v)}catch(e){}break;
+ case "stab":st.sTab=v;break;
+ case "ttab":st.tTab=v;break;
+ case "goal":st.goal=+v;break;
+ case "start":st.diag={phase:"run",ti:0,lvl:"M",n:0,sel:null,answered:false,path:{}};st.sTab="diag";break;
+ case "sample":
+  st.res=computeResults({functions:{M:true,H:true},trig:{M:true,H:true},logs:{M:false,E:false},limits:{M:true,H:false}});
+  st.plan=null;st.approved=false;st.tutor=false;st.ci={hard:[],next:[],conf:3,note:"",sent:false,changes:[]};st.diag.phase="intro";st.role="student";st.sTab="map";break;
+ case "pick":
+  if(d.answered)return;var i=+v,topic=TOPICS[d.ti],q=Q[topic][d.lvl],ok=i===q.a;
+  d.sel=i;d.answered=true;d.path[topic]=d.path[topic]||{};d.path[topic][d.lvl]=ok;
+  if(d.lvl==="M"){d.note=ok?"harder":"easier"}else{d.note="topic"}
+  break;
+ case "next":
+  var tp=TOPICS[d.ti];
+  if(d.lvl==="M"){d.lvl=d.path[tp].M?"H":"E"}else{d.ti++;d.lvl="M"}
+  d.n++;d.sel=null;d.answered=false;
+  if(d.n>=8){st.res=computeResults(d.path);d.phase="intro";st.plan=null;st.approved=false;st.sTab="map"}
+  break;
+ case "build":buildPlan();st.sTab="plan";break;
+ case "why":st.openWhy[v]=!st.openWhy[v];break;
+ case "toggleDone":var it=findItem(v);it.done=!it.done;break;
+ case "openLesson":var li=findItem(v);st.lesson={item:v,topic:li.topic,sel:null,checked:false,hint:false,fmt:0};break;
+ case "closeLesson":if(el.getAttribute("data-self")&&ev.target!==el)return;st.lesson=null;break;
+ case "lpick":if(st.lesson.checked)return;st.lesson.sel=+v;break;
+ case "lhint":st.lesson.hint=!st.lesson.hint;break;
+ case "fmt":st.lesson.fmt=+v;break;
+ case "lcheck":st.lesson.checked=true;break;
+ case "lessonDone":findItem(st.lesson.item).done=true;st.lesson=null;break;
+ case "askChange":toast(t("asked"));return render();
+ case "ciHard":case "ciNext":var arr=a==="ciHard"?st.ci.hard:st.ci.next,k=arr.indexOf(v);if(k>-1)arr.splice(k,1);else arr.push(v);break;
+ case "ciSend":sendCheckin();break;
+ case "ciEdit":st.ci.sent=false;break;
+ case "session":toast(t("sessionToast",{topic:tn(v)}));return render();
+ case "approve":if(v==="demo"){st.approved=true;toast(t("apprToast"))}else{st.others[+v].s="ok"}break;
+ case "tutorToggle":st.tutor=el.checked;if(st.plan){st.plan=st.plan.filter(function(x){return x.kind!=="tutor"});if(st.tutor){st.plan.unshift({id:"tut",w:1,topic:biggestGap()||"logs",kind:"tutor",done:false,isNew:true})}}break;
+ case "bank":var p=v.split("|");st.bank[p[0]]=p[1];break;
+ default:return;
+ }
+ render();
+}
+function sendCheckin(){
+ var c=st.ci,ch=[],n=0;
+ st.plan=st.plan.filter(function(x){return x.kind!=="extra"});
+ c.hard.forEach(function(h){if(TOPICS.indexOf(h)>-1){st.plan.push({id:"x"+(n++),w:2,topic:h,kind:"extra",why:"whyExtra",done:false,isNew:true});ch.push(t("chExtra",{topic:tn(h)}))}});
+ if(c.conf<=2||c.hard.indexOf("motivation")>-1)ch.push(t("chTutor"));
+ if(c.next.indexOf("video")>-1)ch.push(t("chVideo"));
+ if(c.next.indexOf("tutor")>-1)ch.push(t("chAsk"));
+ if(c.next.indexOf("peer")>-1)ch.push(t("chPeer"));
+ if(!ch.length)ch.push(t("chNone"));
+ c.changes=ch;c.sent=true;
+}
+
+document.addEventListener("click",function(e){var el=e.target.closest("[data-act]");if(!el||el.tagName==="INPUT")return;act(el.getAttribute("data-act"),el.getAttribute("data-v"),el,e)});
+document.addEventListener("change",function(e){var el=e.target;if(el.getAttribute&&el.getAttribute("data-act")==="tutorToggle")act("tutorToggle",null,el,e)});
+document.addEventListener("input",function(e){
+ if(e.target.id==="conf"){st.ci.conf=+e.target.value;var o=document.getElementById("confv");if(o)o.textContent=st.ci.conf+"/5"}
+ if(e.target.id==="note"){st.ci.note=e.target.value}
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&st.lesson){st.lesson=null;render()}});
 render();
 </script>
-</body></html>
+</body>
+</html>
